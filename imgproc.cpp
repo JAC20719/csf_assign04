@@ -148,8 +148,13 @@ int main(int argc, char *argv[]) {
       cout << "Image is null :(" << endl;
       exit(1);
     }
-
-    Image *t_img = plugin.transform_image(img, plugin.parse_arguments(argc, argv));
+    //Get remaining params in a char * []
+    int rsize = argc - 5;
+    char *rem[rsize];
+    for(int i = 0; i < rsize; i++) {
+      rem[i] = argv[5 + i];
+    }
+    Image *t_img = plugin.transform_image(img, plugin.parse_arguments(rsize, rem));
     if (!t_img) {
       cout << "Transformed image is null"<< endl;
       exit(1);
