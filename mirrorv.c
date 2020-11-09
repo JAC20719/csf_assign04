@@ -36,11 +36,42 @@ struct Image *transform_image(struct Image *source, void *arg_data) {
 		return NULL;
 	}
 
+	//Rotate 90 Degrees
 	unsigned num_pixels = source->width * source->height;
 	for (unsigned i = 0; i < num_pixels / 2; i++) {
 	  out->data[i] = source->data[num_pixels - i - 1];
 	  out->data[num_pixels - i - 1] = source->data[i];
-	}	  
+	}
+
+	//Make 2D Array for easier use
+	uint32_t twoD[source->width][source->height];
+	unsigned pixel = 0;
+	for(unsigned i = 0; i < source->height; i++) {
+	  for(unsigned j = 0; j < source->width; j++) {
+	    twoD[j][i] = out->data[pixel];
+	    pixel++;
+	  }
+	}
+
+	//Change the pixels in the 2D Array (Reflect across y)
+	for(unsigned i = 0; i < source->height; i++) {
+	  for(unsigned j = 0; j < source->width / 2; j++) {
+	    uint32_t temp = twoD[j][i];
+	    twoD[j][i] = twoD[source->width - j - 1][i];
+	    twoD[source->width - j - 1][i] = temp;
+	  }
+	}
+
+	//Put pixels back into out
+	pixel = 0;
+	for(unsigned i = 0; i < source->height; i++) {
+	  for(unsigned j = 0; j < source->width; j++) {
+	    out->data[pixel] = twoD[j][i];
+	    pixel++;
+	  }
+	}
+
+	
 
 	free(args);
 
