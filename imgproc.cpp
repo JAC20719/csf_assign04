@@ -61,10 +61,12 @@ void list_plugins() {
   folder = opendir(const_cast<char*>(path.c_str()));
   vector<string> v; 
   while(entry=readdir(folder)) {
-    v.push_back(entry->d_name);
+    if ((strcmp(entry->d_name, ".") != 0) && (strcmp(entry->d_name, "..") != 0)) {
+      v.push_back(entry->d_name);
+    }
   }
-  v.pop_back();
-  v.pop_back();
+  //v.pop_back();
+  //v.pop_back();
 
   int size = v.size();
   cout << "Loaded " << size << " plugin(s)" << endl;
@@ -90,10 +92,12 @@ vector<string> get_plugins() {
   folder = opendir(const_cast<char*>(path.c_str()));
   vector<string> v; 
   while(entry=readdir(folder)) {
-    v.push_back(entry->d_name);
+    if((strcmp(entry->d_name, ".") != 0) && (strcmp(entry->d_name, "..") != 0)) {
+      v.push_back(entry->d_name);
+    }
   }
-  v.pop_back();
-  v.pop_back();
+  //v.pop_back();
+  //v.pop_back();
 
   v.push_back(path); //for use outside of function, put the path to the plugins at end of vector
 
@@ -124,7 +128,7 @@ int main(int argc, char *argv[]) {
     int size = plugins.size() - 1; //minus 1 since path to plugins is at end of vector
     int p = -1; 
     for(int i = 0; i < size; i++) {
-      //cout << "The abomination: " << plugins[i].substr(0, plugins[i].length() -3) << endl;
+      cout << "The abomination: " << plugins[i].substr(0, plugins[i].length() -3) << endl;
       if(strcmp(argv[2], const_cast<char*>((plugins[i].substr(0,plugins[i].length()-3)).c_str())) == 0) {
 	p = i;
       }
