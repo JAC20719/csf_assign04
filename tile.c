@@ -20,7 +20,9 @@ void *parse_arguments(int num_args, char *args[]) {
 	(void) args; // this is just to avoid a warning about an unused parameter
     
 	if (num_args == 0 || atoi(args[0]) < 0) {
-	    return NULL;
+	  printf("Error: Invalid argument\n");
+	  exit(1);  
+	  //return NULL;
 	}
 
 	struct Arguments *a = malloc(sizeof(struct Arguments));

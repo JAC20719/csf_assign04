@@ -20,7 +20,9 @@ void *parse_arguments(int num_args, char *args[]) {
 	(void) args; // this is just to avoid a warning about an unused parameter
 	double as_doub = atof(args[0]);
 	if (num_args != 1 || as_doub < 0) {
-	    return NULL;
+	  printf("Error: Invalid arguments\n");
+	  exit(1);  
+	  //return NULL;
 	}
 
 	if (as_doub> 255) {

@@ -117,12 +117,15 @@ int main(int argc, char *argv[]) {
     list_plugins();
     return 0;
   }
-
-  if(argc < 5) {
-    cout << "Incorrect number of arguments" << endl;
-    exit(1);
+  if(strcmp(argv[1], "exec") != 0) {
+    cout << "Error: Unknown command" << endl;
   }
 
+  if(argc < 5) {
+    cout << "Error: Incorrect number of arguments" << endl;
+    exit(1);
+  }
+  
   if(strcmp(argv[1], "exec") == 0) {
     vector<string> plugins = get_plugins();
     int size = plugins.size() - 1; //minus 1 since path to plugins is at end of vector
@@ -169,8 +172,7 @@ int main(int argc, char *argv[]) {
     dlclose(plugin.handle);
 
     return 0;
-  }
-
+  } 
   return 0;
 }
 
