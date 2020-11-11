@@ -96,8 +96,6 @@ vector<string> get_plugins() {
       v.push_back(entry->d_name);
     }
   }
-  //v.pop_back();
-  //v.pop_back();
 
   v.push_back(path); //for use outside of function, put the path to the plugins at end of vector
 
@@ -148,6 +146,10 @@ int main(int argc, char *argv[]) {
     Plugin plugin = get_plugin(const_cast<char*>(full_path.c_str()));
 
     Image *img = img_read_png(argv[3]);
+    if(!img) {
+	    cout << "Error: Invalid File" << endl;
+	    exit(1);
+    }
 
     cout << "Width: " << img->width << ", Height: " << img->height << endl;
 

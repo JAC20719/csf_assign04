@@ -19,7 +19,7 @@ const char *get_plugin_desc(void) {
 void *parse_arguments(int num_args, char *args[]) {
 	(void) args; // this is just to avoid a warning about an unused parameter
     
-	if (num_args == 0 || atoi(args[0]) < 0) {
+	if (num_args == 0 || atoi(args[0]) < 1) {
 	  printf("Error: Invalid argument\n");
 	  exit(1);  
 	  //return NULL;
@@ -33,6 +33,11 @@ void *parse_arguments(int num_args, char *args[]) {
 struct Image *transform_image(struct Image *source, void *arg_data) {
 	struct Arguments *args = arg_data;
 	int n = args->n;
+
+	if(n > source->width || n > source->height) {
+		printf("Error: Invalid argument\n");
+		exit(1);
+	}
 
 	// Allocate a result Image
 	struct Image *out = img_create(source->width, source->height);
